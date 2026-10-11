@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GameHub Mobile</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-2: #121a2d;
+      --panel: #161f35;
+      --panel-2: #1d2945;
+      --accent: #7c5cff;
+      --accent-2: #25d0ff;
+      --text: #edf3ff;
+      --muted: #9aa9c7;
+      --green: #3ad29f;
+      --orange: #ff9f43;
+      --danger: #ff5f7a;
+      --shadow: 0 16px 40px rgba(15, 18, 34, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #16213d 0%, #0b1020 38%, #090d18 100%);
+      color: var(--text);
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .app {
+      width: min(100%, 480px);
+      margin: 0 auto;
+      min-height: 100vh;
+      background: linear-gradient(180deg, rgba(13, 18, 31, 0.95), rgba(7, 10, 17, 0.98));
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(11, 16, 32, 0.7);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 16px 18px 12px;
+    }
+
+    .topbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .brand span { color: var(--accent-2); }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 1.1rem;
+    }
+
+    .search-wrap {
+      margin-top: 12px;
+      position: relative;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      border: none;
+      outline: none;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      padding: 14px 16px 14px 42px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.95rem;
+    }
+
+    .search-wrap::before {
+      content: "🔎";
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.8;
+      font-size: 1rem;
+    }
+
+    .content {
+      padding: 16px 18px 32px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(124, 92, 255, 0.8), rgba(37, 208, 255, 0.43)),
+        url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80") center/cover no-repeat;
+      border-radius: 26px;
+      min-height: 200px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-badge {
+      width: max-content;
+      background: rgba(11, 16, 32, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 2rem;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      max-width: 220px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 14px;
+      padding: 11px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-size: 0.85rem;
+    }
+
+    .btn.primary {
+      background: var(--text);
+      color: #101827;
+    }
+
+    .btn.secondary {
+      background: rgba(14, 18, 32, 0.4);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .section {
+      margin-top: 24px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      letter-spacing: -0.03em;
+    }
+
+    .section-head a {
+      color: var(--accent-2);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .chips {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+
+    .chips::-webkit-scrollbar { display: none; }
+
+    .chip {
+      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .chip.active {
+      background: linear-gradient(135deg, var(--accent), #5864ff);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 10px 20px rgba(124, 92, 255, 0.35);
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 0;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
+    }
+
+    .game-cover {
+      height: 160px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.1);
+    }
+
+    .rank-tag {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      background: rgba(11, 16, 32, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 6px 8px;
+      border-radius: 10px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+
+    .game-body {
+      padding: 12px 12px 14px;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .game-title {
+      font-weight: 800;
+      font-size: 0.94rem;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .game-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .stars {
+      color: #ffcb45;
+      font-weight: 700;
+    }
+
+    .download-btn {
+      margin-top: 10px;
+      width: 100%;
+      background: rgba(124, 92, 255, 0.14);
+      border: 1px solid rgba(124, 92, 255, 0.35);
+      color: #d6d3ff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 18px;
+      padding: 12px;
+      align-items: center;
+    }
+
+    .feature-thumb {
+      width: 84px;
+      height: 84px;
+      border-radius: 16px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .feature-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .feature-copy {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .feature-copy h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .feature-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .tiny-tag {
+      display: inline-block;
+      margin-top: 8px;
+      background: rgba(58, 210, 159, 0.14);
+      color: #76efc2;
+      border: 1px solid rgba(58, 210, 159, 0.28);
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 0.65rem;
+      font-weight: 800;
+    }
+
+    .bottom-nav {
+      position: sticky;
+      bottom: 0;
+      z-index: 30;
+      height: 72px;
+      background: rgba(9, 13, 24, 0.88);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: center;
+      padding: 0 12px;
+    }
+
+    .nav-item {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .nav-item .dot {
+      width: 30px;
+      height: 30px;
+      margin: 0 auto 5px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-item.active {
+      color: var(--text);
+    }
+
+    .nav-item.active .dot {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-color: transparent;
+      box-shadow: 0 10px 22px rgba(124, 92, 255, 0.32);
+    }
+
+    @media (min-width: 420px) {
+      .app {
+        border-left: 1px solid rgba(255, 255, 255, 0.04);
+        border-right: 1px solid rgba(255, 255, 255, 0.04);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="topbar-row">
+        <div class="brand">Game<span>Hub</span></div>
+        <div class="icon-btn">⚙️</div>
+      </div>
+      <div class="search-wrap">
+        <input id="searchInput" type="text" placeholder="Search games, genres..." />
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="hero">
+        <div class="hero-badge">Trending Now</div>
+        <div>
+          <h1>Play the latest hits</h1>
+        </div>
+        <div class="hero-actions">
+          <button class="btn primary">Play now</button>
+          <button class="btn secondary">Watch</button>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Browse by genre</h2>
+          <a href="#">See all</a>
+        </div>
+        <div class="chips">
+          <div class="chip active">All</div>
+          <div class="chip">Action</div>
+          <div class="chip">RPG</div>
+          <div class="chip">Battle</div>
+          <div class="chip">Strategy</div>
+          <div class="chip">Sports</div>
+          <div class="chip">Casual</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Popular right now</h2>
+          <a href="#">More</a>
+        </div>
+        <div class="game-grid">
+          <article class="card" data-name="fortnite">
+            <div class="game-cover">
+              <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80" alt="Fortnite" />
+              <div class="rank-tag">#1</div>
+            </div>
+            <div class="game-body">
+              <div class="title-row">
+                <div class="game-title">Fortnite</div>
+              </div>
+              <div class="game-meta">
+                <span>Battle Royale</span>
+                <span class="stars">★ 4.9</span>
+              </div>
+              <button class="download-btn">Install</button>
+            </div>
+          </article>
+
+          <article class="card" data-name="genshin impact">
+            <div class="game-cover">
+              <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" alt="Genshin Impact" />
+              <div class="rank-tag">#2</div>
+            </div>
+            <div class="game-body">
+              <div class="title-row">
+                <div class="game-title">Genshin Impact</div>
+              </div>
+              <div class="game-meta">
+                <span>Adventure</span>
+                <span class="stars">★ 4.8</span>
+              </div>
+              <button class="download-btn">Install</button>
+            </div>
+          </article>
+
+          <article class="card" data-name="pubg mobile">
+            <div class="game-cover">
+              <img src="https://images.unsplash.com/photo-1526509867163-5c3ae3b5b1ef?auto=format&fit=crop&w=800&q=80" alt="PUBG Mobile" />
+              <div class="rank-tag">#3</div>
+            </div>
+            <div class="game-body">
+              <div class="title-row">
+                <div class="game-title">PUBG Mobile</div>
+              </div>
+              <div class="game-meta">
+                <span>Shooter</span>
+                <span class="stars">★ 4.8</span>
+              </div>
+              <button class="download-btn">Install</button>
+            </div>
+          </article>
+
+          <article class="card" data-name="call of duty mobile">
+            <div class="game-cover">
+              <img src="https://images.unsplash.com/photo-1593305841991-05c297ba1e1f?auto=format&fit=crop&w=800&q=80" alt="Call of Duty Mobile" />
+              <div class="rank-tag">#4</div>
+            </div>
+            <div class="game-body">
+              <div class="title-row">
+                <div class="game-title">COD Mobile</div>
+              </div>
+              <div class="game-meta">
+                <span>Action</span>
+                <span class="stars">★ 4.7</span>
+              </div>
+              <button class="download-btn">Install</button>
+            </div>
+          </article>
+
+          <article class="card" data-name="roblox">
+            <div class="game-cover">
+              <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80" alt="Roblox" />
+              <div class="rank-tag">#5</div>
+            </div>
+            <div class="game-body">
+              <div class="title-row">
+                <div class="game-title">Roblox</div>
+              </div>
+              <div class="game-meta">
+                <span>Creative</span>
+                <span class="stars">★ 4.9</span>
+              </div>
+              <button class="download-btn">Install</button>
+            </div>
+          </article>
+
+          <article class="card" data-name="clash royale">
+            <div class="game-cover">
+              <img src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6?auto=format&fit=crop&w=800&q=80" alt="Clash Royale" />
+              <div class="rank-tag">#6</div>
+            </div>
+            <div class="game-body">
+              <div class="title-row">
+                <div class="game-title">Clash Royale</div>
+              </div>
+              <div class="game-meta">
+                <span>Strategy</span>
+                <span class="stars">★ 4.6</span>
+              </div>
+              <button class="download-btn">Install</button>
+            </div>
+          </article>
+
+          <article class="card" data-name="evoword">
+            <div class="game-cover">
+              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="EvoWord" />
+              <div class="rank-tag">#7</div>
+            </div>
+            <div class="game-body">
+              <div class="title-row">
+                <div class="game-title">EvoWord</div>
+              </div>
+              <div class="game-meta">
+                <span>Word Game</span>
+                <span class="stars">★ 4.7</span>
+              </div>
+              <button class="download-btn">Install</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Featured picks</h2>
+          <a href="#">View all</a>
+        </div>
+
+        <div class="feature-list">
+          <article class="feature-item">
+            <div class="feature-thumb">
+              <img src="https://images.unsplash.com/photo-1528819622761-6bcf94f15f2b?auto=format&fit=crop&w=800&q=80" alt="Mobile Legends" />
+            </div>
+            <div class="feature-copy">
+              <h3>Mobile Legends</h3>
+              <p>5v5 MOBA action with fast-team fights, skill combos, and ranked gameplay.</p>
+              <span class="tiny-tag">Top MOBA</span>
+            </div>
+          </article>
+
+          <article class="feature-item">
+            <div class="feature-thumb">
+              <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" alt="Pokémon GO" />
+            </div>
+            <div class="feature-copy">
+              <h3>Pokémon GO</h3>
+              <p>Explore your city, catch Pokémon, and battle in live raids for epic rewards.</p>
+              <span class="tiny-tag">AR Adventure</span>
+            </div>
+          </article>
+
+          <article class="feature-item">
+            <div class="feature-thumb">
+              <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80" alt="Free Fire" />
+            </div>
+            <div class="feature-copy">
+              <h3>Free Fire</h3>
+              <p>Fast survival fights with compact maps, loot runs, and intense battle pacing.</p>
+              <span class="tiny-tag">Hot drop</span>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <div class="nav-item active">
+        <div class="dot">🏠</div>
+        Home
+      </div>
+      <div class="nav-item">
+        <div class="dot">🎮</div>
+        Games
+      </div>
+      <div class="nav-item">
+        <div class="dot">🏆</div>
+        Top
+      </div>
+      <div class="nav-item">
+        <div class="dot">👤</div>
+        Profile
+      </div>
+    </nav>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const cards = document.querySelectorAll(".card");
+
+    searchInput.addEventListener("input", (e) => {
+      const term = e.target.value.trim().toLowerCase();
+
+      cards.forEach((card) => {
+        const name = card.dataset.name.toLowerCase();
+        card.style.display = name.includes(term) ? "" : "none";
+      });
+    });
+
+    const chips = document.querySelectorAll(".chip");
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        chips.forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>
