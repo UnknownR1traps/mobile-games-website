@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GameHub Mobile</title>
+  <title>Classroom Materials</title>
   <style>
     :root {
       --bg: #0b1020;
@@ -75,6 +75,7 @@
       place-items: center;
       border: 1px solid rgba(255, 255, 255, 0.08);
       font-size: 1.1rem;
+      cursor: pointer;
     }
 
     .search-wrap {
@@ -109,8 +110,7 @@
     }
 
     .hero {
-      background: linear-gradient(135deg, rgba(124, 92, 255, 0.8), rgba(37, 208, 255, 0.43)),
-        url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80") center/cover no-repeat;
+      background: linear-gradient(135deg, rgba(58, 210, 159, 0.8), rgba(37, 208, 255, 0.43));
       border-radius: 26px;
       min-height: 200px;
       padding: 18px;
@@ -140,7 +140,7 @@
       font-size: 2rem;
       line-height: 1.05;
       letter-spacing: -0.04em;
-      max-width: 220px;
+      max-width: 280px;
     }
 
     .hero-actions {
@@ -168,6 +168,11 @@
       background: rgba(14, 18, 32, 0.4);
       color: var(--text);
       border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
 
     .section {
@@ -217,10 +222,10 @@
     }
 
     .chip.active {
-      background: linear-gradient(135deg, var(--accent), #5864ff);
+      background: linear-gradient(135deg, var(--green), #25d0ff);
       color: #fff;
       border-color: transparent;
-      box-shadow: 0 10px 20px rgba(124, 92, 255, 0.35);
+      box-shadow: 0 10px 20px rgba(58, 210, 159, 0.35);
     }
 
     .game-grid {
@@ -236,12 +241,24 @@
       overflow: hidden;
       padding: 0;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(58, 210, 159, 0.5);
+      box-shadow: 0 12px 24px rgba(58, 210, 159, 0.2);
     }
 
     .game-cover {
       height: 160px;
       position: relative;
       overflow: hidden;
+      background: linear-gradient(135deg, rgba(58, 210, 159, 0.2), rgba(37, 208, 255, 0.2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
     }
 
     .game-cover img {
@@ -292,20 +309,26 @@
     }
 
     .stars {
-      color: #ffcb45;
+      color: #76efc2;
       font-weight: 700;
     }
 
     .download-btn {
       margin-top: 10px;
       width: 100%;
-      background: rgba(124, 92, 255, 0.14);
-      border: 1px solid rgba(124, 92, 255, 0.35);
-      color: #d6d3ff;
+      background: rgba(58, 210, 159, 0.14);
+      border: 1px solid rgba(58, 210, 159, 0.35);
+      color: #76efc2;
       border-radius: 12px;
       padding: 10px 12px;
       font-weight: 700;
       cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .download-btn:hover {
+      background: rgba(58, 210, 159, 0.25);
+      border-color: rgba(58, 210, 159, 0.6);
     }
 
     .feature-list {
@@ -321,6 +344,13 @@
       border-radius: 18px;
       padding: 12px;
       align-items: center;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .feature-item:hover {
+      border-color: rgba(58, 210, 159, 0.3);
+      background: rgba(58, 210, 159, 0.05);
     }
 
     .feature-thumb {
@@ -329,6 +359,11 @@
       border-radius: 16px;
       overflow: hidden;
       flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(58, 210, 159, 0.3), rgba(37, 208, 255, 0.3));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
     }
 
     .feature-thumb img {
@@ -366,6 +401,36 @@
       font-weight: 800;
     }
 
+    .game-preview {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .game-preview h3 {
+      margin: 0 0 12px;
+      color: var(--text);
+    }
+
+    #gameCanvas {
+      width: 100%;
+      height: 300px;
+      background: linear-gradient(180deg, rgba(37, 208, 255, 0.1), rgba(58, 210, 159, 0.1));
+      border-radius: 16px;
+      display: block;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .canvas-info {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 8px;
+      text-align: center;
+    }
+
     .bottom-nav {
       position: sticky;
       bottom: 0;
@@ -385,6 +450,7 @@
       color: var(--muted);
       font-size: 0.7rem;
       font-weight: 700;
+      cursor: pointer;
     }
 
     .nav-item .dot {
@@ -403,9 +469,9 @@
     }
 
     .nav-item.active .dot {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      background: linear-gradient(135deg, var(--green), var(--accent-2));
       border-color: transparent;
-      box-shadow: 0 10px 22px rgba(124, 92, 255, 0.32);
+      box-shadow: 0 10px 22px rgba(58, 210, 159, 0.32);
     }
 
     @media (min-width: 420px) {
@@ -420,155 +486,104 @@
   <div class="app">
     <header class="topbar">
       <div class="topbar-row">
-        <div class="brand">Game<span>Hub</span></div>
+        <div class="brand">Classroom<span>Materials</span></div>
         <div class="icon-btn">⚙️</div>
       </div>
       <div class="search-wrap">
-        <input id="searchInput" type="text" placeholder="Search games, genres..." />
+        <input id="searchInput" type="text" placeholder="Search materials, topics..." />
       </div>
     </header>
 
     <main class="content">
       <section class="hero">
-        <div class="hero-badge">Trending Now</div>
+        <div class="hero-badge">Interactive Learning</div>
         <div>
-          <h1>Play the latest hits</h1>
+          <h1>Smooth Wall - Never Blocked</h1>
         </div>
         <div class="hero-actions">
           <button class="btn primary">Play now</button>
-          <button class="btn secondary">Watch</button>
+          <button class="btn secondary">Learn</button>
         </div>
       </section>
 
       <section class="section">
         <div class="section-head">
-          <h2>Browse by genre</h2>
+          <h2>Browse by topic</h2>
           <a href="#">See all</a>
         </div>
         <div class="chips">
           <div class="chip active">All</div>
-          <div class="chip">Action</div>
-          <div class="chip">RPG</div>
-          <div class="chip">Battle</div>
-          <div class="chip">Strategy</div>
-          <div class="chip">Sports</div>
-          <div class="chip">Casual</div>
+          <div class="chip">Physics</div>
+          <div class="chip">Movement</div>
+          <div class="chip">Geometry</div>
+          <div class="chip">Interactive</div>
         </div>
       </section>
 
       <section class="section">
         <div class="section-head">
-          <h2>Popular right now</h2>
+          <h2>Featured materials</h2>
           <a href="#">More</a>
         </div>
         <div class="game-grid">
-          <article class="card" data-name="fortnite">
-            <div class="game-cover">
-              <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80" alt="Fortnite" />
-              <div class="rank-tag">#1</div>
-            </div>
+          <article class="card" data-name="smooth wall">
+            <div class="game-cover">🎮</div>
             <div class="game-body">
               <div class="title-row">
-                <div class="game-title">Fortnite</div>
+                <div class="game-title">Smooth Wall</div>
               </div>
               <div class="game-meta">
-                <span>Battle Royale</span>
+                <span>Physics Demo</span>
                 <span class="stars">★ 4.9</span>
               </div>
-              <button class="download-btn">Install</button>
+              <button class="download-btn">Try It</button>
             </div>
           </article>
 
-          <article class="card" data-name="genshin impact">
-            <div class="game-cover">
-              <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" alt="Genshin Impact" />
-              <div class="rank-tag">#2</div>
-            </div>
+          <article class="card" data-name="collision physics">
+            <div class="game-cover">⚛️</div>
             <div class="game-body">
               <div class="title-row">
-                <div class="game-title">Genshin Impact</div>
+                <div class="game-title">Collision Physics</div>
               </div>
               <div class="game-meta">
-                <span>Adventure</span>
+                <span>Interactive</span>
                 <span class="stars">★ 4.8</span>
               </div>
-              <button class="download-btn">Install</button>
+              <button class="download-btn">Try It</button>
             </div>
           </article>
 
-          <article class="card" data-name="pubg mobile">
-            <div class="game-cover">
-              <img src="https://images.unsplash.com/photo-1526509867163-5c3ae3b5b1ef?auto=format&fit=crop&w=800&q=80" alt="PUBG Mobile" />
-              <div class="rank-tag">#3</div>
-            </div>
+          <article class="card" data-name="velocity simulator">
+            <div class="game-cover">📈</div>
             <div class="game-body">
               <div class="title-row">
-                <div class="game-title">PUBG Mobile</div>
+                <div class="game-title">Velocity Sim</div>
               </div>
               <div class="game-meta">
-                <span>Shooter</span>
-                <span class="stars">★ 4.8</span>
-              </div>
-              <button class="download-btn">Install</button>
-            </div>
-          </article>
-
-          <article class="card" data-name="call of duty mobile">
-            <div class="game-cover">
-              <img src="https://images.unsplash.com/photo-1593305841991-05c297ba1e1f?auto=format&fit=crop&w=800&q=80" alt="Call of Duty Mobile" />
-              <div class="rank-tag">#4</div>
-            </div>
-            <div class="game-body">
-              <div class="title-row">
-                <div class="game-title">COD Mobile</div>
-              </div>
-              <div class="game-meta">
-                <span>Action</span>
+                <span>Simulation</span>
                 <span class="stars">★ 4.7</span>
               </div>
-              <button class="download-btn">Install</button>
+              <button class="download-btn">Try It</button>
             </div>
           </article>
 
-          <article class="card" data-name="roblox">
-            <div class="game-cover">
-              <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80" alt="Roblox" />
-              <div class="rank-tag">#5</div>
-            </div>
+          <article class="card" data-name="gravity explorer">
+            <div class="game-cover">🌍</div>
             <div class="game-body">
               <div class="title-row">
-                <div class="game-title">Roblox</div>
+                <div class="game-title">Gravity Explorer</div>
               </div>
               <div class="game-meta">
-                <span>Creative</span>
-                <span class="stars">★ 4.9</span>
+                <span>Exploration</span>
+                <span class="stars">★ 4.8</span>
               </div>
-              <button class="download-btn">Install</button>
-            </div>
-          </article>
-
-          <article class="card" data-name="clash royale">
-            <div class="game-cover">
-              <img src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6?auto=format&fit=crop&w=800&q=80" alt="Clash Royale" />
-              <div class="rank-tag">#6</div>
-            </div>
-            <div class="game-body">
-              <div class="title-row">
-                <div class="game-title">Clash Royale</div>
-              </div>
-              <div class="game-meta">
-                <span>Strategy</span>
-                <span class="stars">★ 4.6</span>
-              </div>
-              <button class="download-btn">Install</button>
+              <button class="download-btn">Try It</button>
             </div>
           </article>
 
           <article class="card" data-name="evoword">
-            <div class="game-cover">
-              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="EvoWord" />
-              <div class="rank-tag">#7</div>
-            </div>
+            <div class="game-cover">📝</div>
             <div class="game-body">
               <div class="title-row">
                 <div class="game-title">EvoWord</div>
@@ -577,7 +592,21 @@
                 <span>Word Game</span>
                 <span class="stars">★ 4.7</span>
               </div>
-              <button class="download-btn">Install</button>
+              <button class="download-btn">Try It</button>
+            </div>
+          </article>
+
+          <article class="card" data-name="motion tracker">
+            <div class="game-cover">🔄</div>
+            <div class="game-body">
+              <div class="title-row">
+                <div class="game-title">Motion Tracker</div>
+              </div>
+              <div class="game-meta">
+                <span>Analysis</span>
+                <span class="stars">★ 4.6</span>
+              </div>
+              <button class="download-btn">Try It</button>
             </div>
           </article>
         </div>
@@ -585,41 +614,47 @@
 
       <section class="section">
         <div class="section-head">
-          <h2>Featured picks</h2>
+          <h2>Try Smooth Wall Live</h2>
+          <a href="#">Full screen</a>
+        </div>
+        <div class="game-preview">
+          <h3>🎮 Smooth Wall Physics Demo</h3>
+          <canvas id="gameCanvas"></canvas>
+          <p class="canvas-info">Move your cursor/touch to create smooth walls that block nothing. Watch the ball slide through smoothly!</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Educational series</h2>
           <a href="#">View all</a>
         </div>
 
         <div class="feature-list">
           <article class="feature-item">
-            <div class="feature-thumb">
-              <img src="https://images.unsplash.com/photo-1528819622761-6bcf94f15f2b?auto=format&fit=crop&w=800&q=80" alt="Mobile Legends" />
-            </div>
+            <div class="feature-thumb">🎓</div>
             <div class="feature-copy">
-              <h3>Mobile Legends</h3>
-              <p>5v5 MOBA action with fast-team fights, skill combos, and ranked gameplay.</p>
-              <span class="tiny-tag">Top MOBA</span>
+              <h3>Smooth Collision System</h3>
+              <p>Learn how smooth wall mechanics prevent collision clipping and blocking in physics engines.</p>
+              <span class="tiny-tag">Tutorial</span>
             </div>
           </article>
 
           <article class="feature-item">
-            <div class="feature-thumb">
-              <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" alt="Pokémon GO" />
-            </div>
+            <div class="feature-thumb">🔬</div>
             <div class="feature-copy">
-              <h3>Pokémon GO</h3>
-              <p>Explore your city, catch Pokémon, and battle in live raids for epic rewards.</p>
-              <span class="tiny-tag">AR Adventure</span>
+              <h3>Velocity & Momentum</h3>
+              <p>Understand momentum conservation with real-time interactive simulations and experiments.</p>
+              <span class="tiny-tag">Lab</span>
             </div>
           </article>
 
           <article class="feature-item">
-            <div class="feature-thumb">
-              <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80" alt="Free Fire" />
-            </div>
+            <div class="feature-thumb">⚡</div>
             <div class="feature-copy">
-              <h3>Free Fire</h3>
-              <p>Fast survival fights with compact maps, loot runs, and intense battle pacing.</p>
-              <span class="tiny-tag">Hot drop</span>
+              <h3>Advanced Physics</h3>
+              <p>Explore friction, drag, and smooth trajectory prediction in advanced physics scenarios.</p>
+              <span class="tiny-tag">Advanced</span>
             </div>
           </article>
         </div>
@@ -632,8 +667,8 @@
         Home
       </div>
       <div class="nav-item">
-        <div class="dot">🎮</div>
-        Games
+        <div class="dot">📚</div>
+        Materials
       </div>
       <div class="nav-item">
         <div class="dot">🏆</div>
@@ -647,6 +682,158 @@
   </div>
 
   <script>
+    // Smooth Wall Canvas Physics
+    const canvas = document.getElementById("gameCanvas");
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+
+      let ball = {
+        x: canvas.width * 0.5,
+        y: canvas.height * 0.3,
+        vx: 3,
+        vy: 1,
+        radius: 6,
+        gravity: 0.15
+      };
+
+      let mousePos = { x: -999, y: -999 };
+      let wallSegments = [];
+
+      // Mouse tracking
+      canvas.addEventListener("mousemove", (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mousePos.x = e.clientX - rect.left;
+        mousePos.y = e.clientY - rect.top;
+      });
+
+      canvas.addEventListener("touchmove", (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const touch = e.touches[0];
+        mousePos.x = touch.clientX - rect.left;
+        mousePos.y = touch.clientY - rect.top;
+      });
+
+      canvas.addEventListener("mouseleave", () => {
+        mousePos = { x: -999, y: -999 };
+      });
+
+      function smoothDistance(p1, p2) {
+        return Math.hypot(p2.x - p1.x, p2.y - p1.y);
+      }
+
+      function update() {
+        // Apply gravity
+        ball.vy += ball.gravity;
+
+        // Movement
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+
+        // Boundary collision (smooth bouncing)
+        if (ball.x - ball.radius < 0) {
+          ball.x = ball.radius;
+          ball.vx *= -0.85;
+        }
+        if (ball.x + ball.radius > canvas.width) {
+          ball.x = canvas.width - ball.radius;
+          ball.vx *= -0.85;
+        }
+        if (ball.y - ball.radius < 0) {
+          ball.y = ball.radius;
+          ball.vy *= -0.85;
+        }
+        if (ball.y + ball.radius > canvas.height) {
+          ball.y = canvas.height - ball.radius;
+          ball.vy *= -0.85;
+        }
+
+        // Smooth wall collision - passes through but with friction
+        if (wallSegments.length > 0) {
+          for (let seg of wallSegments) {
+            // Find closest point on line segment to ball
+            let dx = seg.x2 - seg.x1;
+            let dy = seg.y2 - seg.y1;
+            let t = Math.max(0, Math.min(1, ((ball.x - seg.x1) * dx + (ball.y - seg.y1) * dy) / (dx * dx + dy * dy)));
+            
+            let closestX = seg.x1 + t * dx;
+            let closestY = seg.y1 + t * dy;
+            
+            let dist = Math.hypot(ball.x - closestX, ball.y - closestY);
+
+            // Smooth interaction - reduce velocity without blocking
+            if (dist < ball.radius + 8) {
+              let force = 1 - (dist / (ball.radius + 8));
+              ball.vx *= (1 - force * 0.3);
+              ball.vy *= (1 - force * 0.3);
+            }
+          }
+        }
+
+        // Friction
+        ball.vx *= 0.98;
+      }
+
+      function draw() {
+        // Clear with gradient
+        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        gradient.addColorStop(0, "rgba(37, 208, 255, 0.05)");
+        gradient.addColorStop(1, "rgba(58, 210, 159, 0.05)");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw walls
+        ctx.strokeStyle = "rgba(124, 92, 255, 0.6)";
+        ctx.lineWidth = 3;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        for (let seg of wallSegments) {
+          ctx.beginPath();
+          ctx.moveTo(seg.x1, seg.y1);
+          ctx.lineTo(seg.x2, seg.y2);
+          ctx.stroke();
+        }
+
+        // Draw cursor wall indicator
+        if (mousePos.x > -999) {
+          ctx.strokeStyle = "rgba(58, 210, 159, 0.4)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(mousePos.x, mousePos.y, 20, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        // Draw ball
+        ctx.fillStyle = "rgba(37, 208, 255, 0.9)";
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "rgba(58, 210, 159, 0.8)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Info
+        ctx.fillStyle = "rgba(237, 243, 255, 0.5)";
+        ctx.font = "11px Arial";
+        ctx.fillText(`Speed: ${Math.hypot(ball.vx, ball.vy).toFixed(1)}`, 8, canvas.height - 8);
+      }
+
+      function animate() {
+        update();
+        draw();
+        requestAnimationFrame(animate);
+      }
+
+      // Create initial wall on load
+      wallSegments.push({ x1: 100, y1: 200, x2: 250, y2: 240 });
+      wallSegments.push({ x1: canvas.width - 100, y1: 150, x2: canvas.width - 250, y2: 220 });
+
+      animate();
+    }
+
+    // Search functionality
     const searchInput = document.getElementById("searchInput");
     const cards = document.querySelectorAll(".card");
 
@@ -659,6 +846,7 @@
       });
     });
 
+    // Chip filtering
     const chips = document.querySelectorAll(".chip");
     chips.forEach((chip) => {
       chip.addEventListener("click", () => {
